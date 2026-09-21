@@ -1,0 +1,201 @@
+{
+  "10": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_pose.webp"
+    }
+  },
+  "11": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_char.png"
+    }
+  },
+  "37": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "38": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "device": "default",
+      "type": "qwen_image"
+    }
+  },
+  "39": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    }
+  },
+  "89": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "Qwen-Image-Edit-Lightning-4steps-V1.0.safetensors",
+      "model": [
+        "37",
+        0
+      ],
+      "strength_model": 1.0
+    }
+  },
+  "66": {
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {
+      "model": [
+        "37",
+        0
+      ],
+      "shift": 3.0
+    }
+  },
+  "75": {
+    "class_type": "CFGNorm",
+    "inputs": {
+      "model": [
+        "66",
+        0
+      ],
+      "strength": 1.0
+    }
+  },
+  "117": {
+    "class_type": "FluxKontextImageScale",
+    "inputs": {
+      "image": [
+        "10",
+        0
+      ]
+    }
+  },
+  "88": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "117",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ]
+    }
+  },
+  "111": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": {
+      "clip": [
+        "38",
+        0
+      ],
+      "image1": [
+        "117",
+        0
+      ],
+      "image2": [
+        "11",
+        0
+      ],
+      "prompt": "Use Picture 1 as the STRICT pose, body position, camera angle, crop, framing, hand placement, and composition reference. Repose the character from Picture 2 to exactly match Picture 1. Picture 2 supplies ONLY the character identity: face, hairstyle, body type, outfit, colors, accessories, and art style. Do NOT use the pose, body position, camera angle, framing, or background from Picture 2. Do NOT copy the person, face, clothing, or background from Picture 1. The result must be completely SFW: the character is fully clothed in the same intact outfit from Picture 2, with chest and torso completely covered. No nudity, no exposed breasts, no nipples, no see-through clothing, no wardrobe removal. Sharp focus, natural lighting, ultra-detailed, best quality.",
+      "vae": [
+        "39",
+        0
+      ]
+    }
+  },
+  "110": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": {
+      "clip": [
+        "38",
+        0
+      ],
+      "image1": [
+        "117",
+        0
+      ],
+      "image2": [
+        "11",
+        0
+      ],
+      "prompt": "nudity, nude, naked, topless, exposed breasts, breasts, nipples, areola, cleavage, see-through clothing, transparent clothing, open shirt, unbuttoned shirt, wardrobe removal, NSFW, explicit, pornographic, sexualized pose",
+      "vae": [
+        "39",
+        0
+      ]
+    }
+  },
+  "3": {
+    "class_type": "KSampler",
+    "inputs": {
+      "cfg": 4.0,
+      "denoise": 1.0,
+      "latent_image": [
+        "88",
+        0
+      ],
+      "model": [
+        "75",
+        0
+      ],
+      "negative": [
+        "110",
+        0
+      ],
+      "positive": [
+        "111",
+        0
+      ],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "seed": 987654321,
+      "steps": 30
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "39",
+        0
+      ]
+    }
+  },
+  "20": {
+    "class_type": "UpscaleModelLoader",
+    "inputs": {
+      "model_name": "4x-AnimeSharp.pth"
+    }
+  },
+  "21": {
+    "class_type": "ImageUpscaleWithModel",
+    "inputs": {
+      "upscale_model": [
+        "20",
+        0
+      ],
+      "image": [
+        "8",
+        0
+      ]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "proj5_qwen_pose_character_hidetail_up4x",
+      "images": [
+        "21",
+        0
+      ]
+    }
+  }
+}
