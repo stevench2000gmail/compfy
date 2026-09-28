@@ -1,0 +1,41 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_qwen_pose_balance.png"
+    }
+  },
+  "30": {
+    "class_type": "LoadBackgroundRemovalModel",
+    "inputs": {
+      "bg_removal_name": "birefnet.safetensors"
+    }
+  },
+  "31": {
+    "class_type": "RemoveBackground",
+    "inputs": {
+      "bg_removal_model": ["30", 0],
+      "image": ["1", 0]
+    }
+  },
+  "33": {
+    "class_type": "InvertMask",
+    "inputs": {
+      "mask": ["31", 0]
+    }
+  },
+  "32": {
+    "class_type": "JoinImageWithAlpha",
+    "inputs": {
+      "image": ["1", 0],
+      "alpha": ["33", 0]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "proj5_alpha_test_fixed",
+      "images": ["32", 0]
+    }
+  }
+}

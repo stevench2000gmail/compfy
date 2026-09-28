@@ -1,0 +1,19 @@
+{
+  "request_name": "girl_spear_fighting",
+  "character": "1girl, solo, adult female fantasy knight, auburn red hair in high ponytail with small black bow, blue eyes, pale skin, intricate black and dark-red military dress with gold trim and long skirt panels, red cape with gold patterned lining, black gloves, short military skirt with visible bare upper thighs, thigh-high black armored boots with gold armor",
+  "outfit": "same outfit as character reference, do not redesign armor, keep long skirt panels and cape",
+  "item": "holding one slim long red lance spear with thin shaft and slim lanceolate red spearhead in both hands in a forward thrust, polearm only, full shaft visible",
+  "intention": "spear thrust fighting lunge, front leg extended forward, rear leg back, torso leaning into the thrust, both hands driving the spear forward",
+  "quality_prefix": "masterpiece, best quality, highly detailed anime illustration, sharp focus, precise clean line art, detailed fabric and armor",
+  "negative": "worst quality, low quality, lowres, blurry, jpeg artifacts, deformed, bad anatomy, extra limbs, extra fingers, missing fingers, cropped, short hair, bob cut, different outfit, gold breastplate, sword, greatsword, blade, broad blade, axe, multiple people, two girls, duplicate character, clone, second person, crowd, animal, bird, nude, nudity, naked, topless, exposed breasts, nipples, see-through clothing, NSFW, explicit",
+  "steps": 45,
+  "cfg": 5.0,
+  "denoise": 1.0,
+  "sampler_name": "dpmpp_2m",
+  "scheduler": "karras",
+  "control_strength": 0.7,
+  "ipadapter_weight": 0.7,
+  "width": 832,
+  "height": 1248,
+  "seed_base": 400201
+}

@@ -1,0 +1,145 @@
+{
+  "10": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_sdxl_fullbody_base.png"
+    }
+  },
+  "11": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_char.png"
+    }
+  },
+  "37": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "38": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "device": "default",
+      "type": "qwen_image"
+    }
+  },
+  "39": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    }
+  },
+  "66": {
+    "class_type": "ModelSamplingAuraFlow",
+    "inputs": {
+      "model": ["37", 0],
+      "shift": 3.0
+    }
+  },
+  "75": {
+    "class_type": "CFGNorm",
+    "inputs": {
+      "model": ["66", 0],
+      "strength": 1.0
+    }
+  },
+  "117": {
+    "class_type": "FluxKontextImageScale",
+    "inputs": {
+      "image": ["10", 0]
+    }
+  },
+  "88": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": ["117", 0],
+      "vae": ["39", 0]
+    }
+  },
+  "111": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": {
+      "clip": ["38", 0],
+      "image1": ["117", 0],
+      "image2": ["11", 0],
+      "image3": ["12", 0],
+      "vae": ["39", 0],
+      "prompt": "Picture 1 is the strict composition source. Picture 3 is an OpenPose skeleton and controls the exact full-body pose, limb placement, hand placement, camera angle, crop, framing, and silhouette. Preserve the pose from Picture 3, not the pose from Picture 2. Re-render Picture 1 at the illustration quality of Picture 2, using Picture 2 only for the character's identity and visual rendering: natural auburn hair, blue eyes, the intricate layered black-and-dark-red military dress, fine gold trim, red cape, gloves, tall armored boots, precise clean line art, detailed fabric seams, armor construction, jewelry, and high-end anime rendering. Do not simplify the costume or make a generic cartoon. Do not use Picture 2's pose, composition, framing, background, or spear placement. Correct artifacts, blurred edges, malformed hands, malformed boots, and low-detail textures. Fully clothed, SFW."
+    }
+  },
+  "110": {
+    "class_type": "TextEncodeQwenImageEditPlus",
+    "inputs": {
+      "clip": ["38", 0],
+      "image1": ["117", 0],
+      "image2": ["11", 0],
+      "image3": ["12", 0],
+      "vae": ["39", 0],
+      "prompt": "change pose, change camera angle, crop, close-up, missing limbs, extra limbs, malformed anatomy, blurry, low quality, distorted face, distorted hands, nude, nudity, naked, topless, exposed breasts, nipples, see-through clothing, NSFW"
+    }
+  },
+  "3": {
+    "class_type": "KSampler",
+    "inputs": {
+      "cfg": 4.5,
+      "denoise": 0.75,
+      "latent_image": ["88", 0],
+      "model": ["75", 0],
+      "negative": ["110", 0],
+      "positive": ["111", 0],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "seed": 987654321,
+      "steps": 40
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["3", 0],
+      "vae": ["39", 0]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "proj5_qwen_sdpose_pose_balance_transparent",
+      "images": ["32", 0]
+    }
+  },
+  "12": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_pose_fullbody_map.png"
+    }
+  },
+  "30": {
+    "class_type": "LoadBackgroundRemovalModel",
+    "inputs": {
+      "bg_removal_name": "birefnet.safetensors"
+    }
+  },
+  "31": {
+    "class_type": "RemoveBackground",
+    "inputs": {
+      "bg_removal_model": ["30", 0],
+      "image": ["8", 0]
+    }
+  },
+  "32": {
+    "class_type": "JoinImageWithAlpha",
+    "inputs": {
+      "image": ["8", 0],
+      "alpha": ["33", 0]
+    }
+  },
+  "33": {
+    "class_type": "InvertMask",
+    "inputs": {
+      "mask": ["31", 0]
+    }
+  }
+}

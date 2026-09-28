@@ -1,0 +1,10 @@
+# Python bytecode caches.
+__pycache__/
+
+# Local WSL runtime environment and process state.
+.venv/
+.prototype.pid
+.prototype.log
+
+# Local ContentStudio chat-upload staging (regenerated via tools/prepare_upload.py).
+tmp/

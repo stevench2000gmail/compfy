@@ -1,0 +1,11 @@
+# label|input_image|pose_description
+op428|reference_pose_op_428.jpg|wide-legged action stance, one arm extended far to the side, torso upright
+op536|reference_pose_op_536.jpg|upright standing pose, both legs straight, one hand raised near the torso
+op564|reference_pose_op_564.jpg|contrapposto standing pose, one knee bent, both hands held at the waist
+op589|reference_pose_op_589.jpg|wide walking stance, one arm bent upward across the chest
+op623|reference_pose_op_623.jpg|dynamic leaning action pose, one arm raised, feet planted apart
+bakasana|reference_pose_bakasana.jpg|crow yoga balance, both knees bent, hands braced below the body
+kakasana|reference_pose_kakasana.jpg|compact crow yoga balance, knees bent, arms supporting the body
+mayurasana|reference_pose_mayurasana.jpg|horizontal peacock yoga balance, body extended forward, arms braced below the torso
+scorpion|reference_pose_scorpion.png|inverted scorpion balance, body arched upward, arms supporting the body
+sea_yoga|reference_pose_sea_yoga.jpg|standing yoga balance with a raised leg and extended arms

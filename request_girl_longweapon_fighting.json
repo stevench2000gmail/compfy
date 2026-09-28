@@ -1,0 +1,19 @@
+{
+  "request_name": "girl_longweapon_fighting",
+  "character": "1girl, solo, single adult female fantasy knight, auburn red hair, blue eyes",
+  "outfit": "intricate black and dark-red military dress with gold trim, red cape, black gloves, short military skirt, visible bare upper thighs between the skirt and thigh-high armored boots",
+  "item": "holding one long two-handed steel greatsword with gold guard, weapon gripped in one or both hands, no extra weapons",
+  "intention": "dynamic fighting pose, battle-ready action stance, full body visible, feet planted, sword technique in motion",
+  "quality_prefix": "masterpiece, best quality, highly detailed anime illustration, sharp focus, clean line art, detailed armor reflections",
+  "negative": "worst quality, low quality, lowres, blurry, jpeg artifacts, deformed, bad anatomy, extra limbs, extra fingers, missing fingers, cropped, multiple people, two girls, duplicate character, clone, second person, crowd, animal, bird, crow, nude, nudity, naked, topless, exposed breasts, nipples, see-through clothing, NSFW, explicit",
+  "steps": 55,
+  "cfg": 5.5,
+  "denoise": 1.0,
+  "sampler_name": "dpmpp_2m",
+  "scheduler": "karras",
+  "control_strength": 1.05,
+  "ipadapter_weight": 0.12,
+  "width": 832,
+  "height": 1248,
+  "seed_base": 300101
+}

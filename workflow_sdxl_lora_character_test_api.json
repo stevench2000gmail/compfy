@@ -1,0 +1,69 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "waiNSFWIllustrious_v150.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "lora_name": "fanta-chr002-ressa.safetensors",
+      "strength_model": 0.85,
+      "strength_clip": 0.85,
+      "model": ["1", 0],
+      "clip": ["1", 1]
+    }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "fanta_chr002_ressa, 1girl, solo, full body, auburn hair high ponytail black bow, blue eyes, black dark-red dress long skirt panels, red cape gold lining, thigh-high armored boots, holding thin red lance spear, dynamic spear fighting stance, anime illustration, detailed",
+      "clip": ["2", 1]
+    }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "blurry, low quality, deformed, mutated, extra limbs, extra heads, duplicate character, sword, greatsword, blade, axe, nude, censored, watermark",
+      "clip": ["2", 1]
+    }
+  },
+  "5": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 832,
+      "height": 1248,
+      "batch_size": 1
+    }
+  },
+  "6": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["2", 0],
+      "positive": ["3", 0],
+      "negative": ["4", 0],
+      "latent_image": ["5", 0],
+      "seed": 400101,
+      "steps": 30,
+      "cfg": 5.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 1.0
+    }
+  },
+  "7": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["6", 0],
+      "vae": ["1", 2]
+    }
+  },
+  "8": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "proj5_lora_ressa_test",
+      "images": ["7", 0]
+    }
+  }
+}

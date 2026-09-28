@@ -1,0 +1,59 @@
+fanta_chr002_ressa dataset - HOW TO BUILD FROM 2 IMAGES (fullbody + atlas)
+
+DO NOT bulk-generate 30 ChatGPT images and train on them.
+ChatGPT will drift the face/hair/outfit slightly each time, and LoRA will learn the AVERAGE wrong face.
+Use this instead:
+
+1. CROP YOUR 2 GOOD IMAGES (this is 80% of your dataset)
+From atlas + fullbody, export 1024x1024+ crops, each as separate file:
+- 01_fullbody.png (whole character, clean bg)
+- 02_face_closeup.png (crop head/shoulders, upscale to 1024)
+- 03_torso.png (outfit + bow + cape detail)
+- 04_legs_boots.png (skirt panels + thigh-high boots)
+- 05_back_view.png (if atlas has it, else mirror with note)
+- 06_hair_bow_detail.png
+- 07_spear_detail.png
+- + horizontal flips of 01-04 = doubles count for free
+
+Save as PNG, no upscale artifacts, no text bubbles.
+
+2. OPTIONAL ChatGPT EXPANSION (max 30% of dataset)
+Only if you need poses. Prompt ChatGPT with your atlas attached:
+"same character, same face, same auburn high ponytail black bow, same outfit, new pose: [spear guard / lunge / overhead slash], plain white background, anime illustration, full body"
+
+Keep ONLY generations where ponytail + bow + outfit match. Delete the rest.
+Strict rule: if hair color shifts pink, or spear becomes sword, DELETE. Bad data is worse than no data.
+
+3. SAME OUTFIT vs DIFFERENT OUTFITS - for you: SAME OUTFIT
+- Same outfit = LoRA learns identity + outfit locked. Best for your spear-fighting poses. Trigger = character + outfit together.
+- Different outfits = LoRA learns face only, outfit must be prompted each time. Weaker likeness, needs outfit tags in every caption.
+Recommendation: train v1 SAME outfit (canonical black/dark-red dress + cape + boots). Do different-outfit v2 later if needed.
+
+4. CAPTIONS - identity vs outfit split
+Trigger with UNDERSCORES (CLIP splits hyphens): fanta_chr002_ressa
+Every .txt starts with trigger, then identity (constant), then image-specific (variable).
+
+Example 01_fullbody.txt:
+fanta_chr002_ressa, 1girl, solo, full body, standing, auburn hair high ponytail black bow, blue eyes, black dark-red dress long skirt panels, red cape gold lining, thigh-high armored boots, holding thin red lance, plain background, anime illustration
+
+Example 02_face_closeup.txt:
+fanta_chr002_ressa, 1girl, solo, face closeup, auburn hair high ponytail black bow, blue eyes, detailed face, plain background, anime illustration
+
+Example synthetic pose:
+fanta_chr002_ressa, 1girl, solo, full body, spear fighting lunge, right hand holding thin red lance forward, black dark-red dress long skirt panels, red cape flowing, plain background, anime illustration
+
+DO NOT add: score_9, pony tags, artist names, NSFW tags in training. Keep training SFW-clean. NSFW comes at inference with waiNSFW base.
+
+5. FOLDER + REPEATS MATH
+lora_train/dataset/fanta_chr002_ressa/
+  01.png + 01.txt, 02.png + 02.txt ...
+
+Target 1500-2500 steps. repeats = target / (images * epochs)
+Ex: 14 images x 12 epochs = 168, repeats 10 = 1680 steps. Good.
+Ex: 8 images x 12 epochs = 96, repeats 20 = 1920 steps. Good.
+
+6. TRAIN in OneTrainer, TEST in ComfyUI
+- OneTrainer: settings in onetrainer_fanta_chr002_ressa.json
+- Output: Data/Models/Lora/fanta-chr002-ressa.safetensors
+- Test: workflow_sdxl_lora_character_test_api.json, strength 0.85, seed sweep
+- Pass = ponytail+bow, auburn (not pink), slim lance (not sword), outfit colors hold at 832x1248 txt2img with NO ControlNet. Only then add pose ControlNet back.

@@ -1,0 +1,54 @@
+{
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "reference_pose_fullbody.jpg"
+    }
+  },
+  "2": {
+    "class_type": "ImageScale",
+    "inputs": {
+      "image": ["1", 0],
+      "upscale_method": "lanczos",
+      "width": 512,
+      "height": 768,
+      "crop": "disabled"
+    }
+  },
+  "4": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sdpose_wholebody_fp16.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "SDPoseKeypointExtractor",
+    "inputs": {
+      "batch_size": 1,
+      "model": ["4", 0],
+      "vae": ["4", 2],
+      "image": ["2", 0]
+    }
+  },
+  "6": {
+    "class_type": "SDPoseDrawKeypoints",
+    "inputs": {
+      "draw_body": true,
+      "draw_hands": true,
+      "draw_face": true,
+      "draw_feet": true,
+      "stick_width": 4,
+      "face_point_size": 2,
+      "score_threshold": 0.3,
+      "draw_head": true,
+      "keypoints": ["5", 0]
+    }
+  },
+  "7": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "proj5_sdpose_fullbody_pose_test_preview",
+      "images": ["6", 0]
+    }
+  }
+}
