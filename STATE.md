@@ -150,4 +150,4 @@ Run steps:
 
   41. Damina TRAINED 2026-10-01: verified `Data/Models/Lora/fanta-chr007-damina.safetensors` (123M, 3177 tensors: unet 2382 / te1 216 / te2 579, KOHYA `lora_unet_/lora_te_` keys, SDXL-LoRA metadata – matches Ressa/Saevia/Edria). GPU free. Next: Damina inference test (`workflow_sdxl_lora_character_test_api.json`, trigger `fanta_chr007_damina`, 0.6-1.0 pick best), then Veska training (`chr_012-veska/test.json`, balancing=14 by hand, ~84 steps epoch 1).
 
-  Last status: DAMINA TRAINED 2026-10-01 – LoRA verified good. VESKA READY – queued next, GPU free. Next: Damina inference test, then Veska Train press.
+  Last status: DAMINA TRAINED 2026-10-01 – LoRA verified good. VESKA READY – dataset + captions + config done; `chr_012-veska/test.json` re-verified good after user refresh (dest veska, KOHYA, values intact, formatting-only diff). GPU free. Next: Damina inference test, then Veska Train press (balancing=14, ~84 steps epoch 1).
