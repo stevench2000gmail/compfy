@@ -64,7 +64,8 @@ Cons: ~29GB files, heavier VRAM, more complex workflow
 4. Future: crop-zoom second pass for tiny/distant girls, optional 0.5x downscale after 4x upscale if files too large
 
 ## 6. Resume instructions for future session
-- Workspace is ONLY `proj5/`. Read this file first.
+- Workspace is ONLY `proj5/`. Read this file first. THIS FILE is the resume document when chat dies / new window / new machine.
+- Save-state workflow (user-locked 2026-09-30): on "save state" ALWAYS update this STATE.md AND `git add -A && git commit && git push` (origin main). Never doc-only.
 - Do NOT scan outside except the StabilityMatrix Data paths listed above (read-only, except approved model downloads to Models/ESRGAN/).
 - Current files: `workflow_img2img_qwen2509_api.json` (fast 4-step), `workflow_img2img_qwen2509_hidetail_api.json` (30-step, no LoRA), `workflow_img2img_qwen2509_hidetail_upscale_api.json` (hidetail + 4x-AnimeSharp, RECOMMENDED).
 - Prompt is v3 GENERAL (any girls picture, explicit nipples, garment-type logic). Do not revert to greenhouse-specific v1/v2.
